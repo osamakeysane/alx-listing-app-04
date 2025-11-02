@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import PropertyDetail from "@/components/property/PropertyDetail";
+import ReviewSection from "@/components/property/ReviewSection";
 
 interface Property {
   id: number;
@@ -24,12 +25,12 @@ export default function PropertyDetailPage() {
 
   useEffect(() => {
     const fetchProperty = async () => {
-      if (!id) return; // wait until id is available
+      if (!id) return; // Wait until id is available
 
       try {
         const response = await axios.get(
           `https://example.com/api/properties/${id}`
-        ); // Replace with real API URL
+        ); // Replace with your real API URL
         setProperty(response.data);
       } catch (error) {
         console.error("Error fetching property details:", error);
@@ -56,5 +57,10 @@ export default function PropertyDetailPage() {
     return <p className="text-center text-gray-600">Property not found.</p>;
   }
 
-  return <PropertyDetail property={property} />;
+  return (
+    <div>
+      <PropertyDetail property={property} />
+      <ReviewSection propertyId={property.id} />
+    </div>
+  );
 }
